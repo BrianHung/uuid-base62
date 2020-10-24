@@ -74,7 +74,7 @@ function parseToDigitsArray(str) {
  * @param {integer} toBase intger base 1-62 to convert to
  * @return {string} out string encoded in toBase
  */
-export function convertBase(str, fromBase, toBase) {
+function convertBase(str, fromBase, toBase) {
   var digits = parseToDigitsArray(str);
   if (digits === null) return null;
 
@@ -96,12 +96,13 @@ export function convertBase(str, fromBase, toBase) {
 /**
  * Encodes uuid into base62.
  * @param {string} uuid 
- * @return {string} base62 encoded string
+ * @return {string} length-22 base62-encoded string
  */
 export function uuidEncodeBase62(uuidString) {
   var hexString = uuidString.replace(/-/g, '')
-  var base62 = convertBase(hexString, 16, 62)
-  return base62
+  var baseString = convertBase(hexString, 16, 62)
+  baseString = baseString.padStart(22, '0') // ensure string is length 22 if uuid has leading 0s
+  return baseString
 }
 
 /**
@@ -110,7 +111,8 @@ export function uuidEncodeBase62(uuidString) {
  * @return {string} uuid
  */
 export function uuidDecodeBase62(baseString) {
-  var hexString = convertBase(baseString, 62, 16)
-  var frags = [hexString.slice(0, 8), hexString.slice(8, 12), hexString.slice(12, 16), hexString.slice(16, 20), hexString.slice(20)]
-  return frags.join('-');
+  var hexString = convertBase(baseString, 62, 16).padStart(32, '0')
+  hexString = hexString.padStart(32, '0') // ensure string is length 22 if baseString has leading 0s
+  var uuidString = [hexString.slice(0, 8), hexString.slice(8, 12), hexString.slice(12, 16), hexString.slice(16, 20), hexString.slice(20)]
+  return uuidString.join('-');
 }
