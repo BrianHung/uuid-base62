@@ -2,10 +2,16 @@
   "name": "uuid-base62",
   "version": "1.0.0",
   "description": "convert between uuid and base62 in the browser without Buffer or BigInt",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",  
   "repository": { "type": "git", "url": "git+https://github.com/brianhung/uuid-base62.git" },
   "keywords": ["uuid", "base62"],
   "contributors": ["Brian Hung <brianlhung@gmail.com>"],
   "bugs": { "url": "https://github.com/brianhung/uuid-base62/issues" },
-  "homepage": "https://github.com/brianhung/uuid-base62#readme"
+  "homepage": "https://github.com/brianhung/uuid-base62#readme",
+  "devDependencies": { "rollup": "^2.32.1" },
+  "scripts": {
+    "build": "rollup -c",
+    "prepare": "npm run build"
+  }
 }
