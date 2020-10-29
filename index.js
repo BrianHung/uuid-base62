@@ -111,8 +111,8 @@ export function uuidEncodeBase62(uuidString) {
  * @return {string} uuid
  */
 export function uuidDecodeBase62(baseString) {
-  var hexString = convertBase(baseString, 62, 16).padStart(32, '0')
-  hexString = hexString.padStart(32, '0') // ensure string is length 22 if baseString has leading 0s
+  var hexString = convertBase(baseString, 62, 16)
+  hexString = hexString.padStart(32, '0') // ensure string is length 32 if baseString has leading 0s
   var uuidString = [hexString.slice(0, 8), hexString.slice(8, 12), hexString.slice(12, 16), hexString.slice(16, 20), hexString.slice(20)]
   return uuidString.join('-');
 }
