@@ -2,16 +2,19 @@
   "name": "uuid-base62",
   "version": "1.0.0",
   "description": "convert between uuid and base62 in the browser without Buffer or BigInt",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",  
-  "repository": { "type": "git", "url": "git+https://github.com/brianhung/uuid-base62.git" },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/types/index.d.ts",
+  "repository": {"type": "git", "url": "git+https://github.com/brianhung/uuid-base62.git"},
   "keywords": ["uuid", "base62"],
   "contributors": ["Brian Hung <brianlhung@gmail.com>"],
-  "bugs": { "url": "https://github.com/brianhung/uuid-base62/issues" },
+  "bugs": {"url": "https://github.com/brianhung/uuid-base62/issues"},
   "homepage": "https://github.com/brianhung/uuid-base62#readme",
-  "devDependencies": { "rollup": "^2.32.1" },
+  "devDependencies": {"typescript": "^4.0.5"},
   "scripts": {
-    "build": "rollup -c",
+    "build": "rm -r -f dist/ && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc --module es2015   --outDir dist/esm",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "prepare": "npm run build"
   }
 }

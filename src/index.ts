@@ -3,13 +3,9 @@ var charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 /**
  * Adds two arrays for the given base, returning the result.
- * See https://github.com/donmccurdy/hex2dec
- * @param {number[]} x 
- * @param {number[]} y
- * @param {number} base 
- * @return {number[]} z
+ * Source: https://github.com/donmccurdy/hex2dec
  */
-function add(x, y, base) {
+function add(x: number[], y: number[], base: number): number[] {
   var z = [];
   var n = Math.max(x.length, y.length);
   var carry = 0;
@@ -27,13 +23,9 @@ function add(x, y, base) {
 
 /**
  * Returns num * x.
- * See https://github.com/donmccurdy/hex2dec
- * @param {number} num 
- * @param {number[]} x 
- * @param {number} base
- * @return {number[]} result
+ * Source: https://github.com/donmccurdy/hex2dec
  */
-function multiplyByNumber(num, x, base) {
+function multiplyByNumber(num: number, x: number[], base: number): number[] {
   if (num < 0) return null;
   if (num == 0) return [];
 
@@ -51,11 +43,9 @@ function multiplyByNumber(num, x, base) {
 
 /**
  * Parses string encoded in charset into digits array, e.g. 'Z' -> [62].
- * See https://github.com/donmccurdy/hex2dec
- * @param {string} str 
- * @return {number[]} array
+ * Source: https://github.com/donmccurdy/hex2dec
  */
-function parseToDigitsArray(str) {
+function parseToDigitsArray(str: string): number[] {
   var digits = str.split('');
   var array = [];
   for (var i = digits.length - 1; i >= 0; i--) {
@@ -68,13 +58,13 @@ function parseToDigitsArray(str) {
 
 /**
  * Converts a string encoded in fromBase to toBase.
- * See https://github.com/donmccurdy/hex2dec
- * @param {string} str string encoded in fromBase
- * @param {integer} fromBase integer base 1-62 to convert from
- * @param {integer} toBase intger base 1-62 to convert to
- * @return {string} out string encoded in toBase
+ * Source: https://github.com/donmccurdy/hex2dec
+ * @param str string encoded in fromBase
+ * @param fromBase integer base 1-62 to convert from
+ * @param toBase intger base 1-62 to convert to
+ * @return out string encoded in toBase
  */
-function convertBase(str, fromBase, toBase) {
+function convertBase(str: string, fromBase: number, toBase: number): string {
   var digits = parseToDigitsArray(str);
   if (digits === null) return null;
 
@@ -95,10 +85,10 @@ function convertBase(str, fromBase, toBase) {
 
 /**
  * Encodes uuid into base62.
- * @param {string} uuid 
- * @return {string} length-22 base62-encoded string
+ * @param uuidString
+ * @return length-22 base62-encoded string
  */
-export function uuidEncodeBase62(uuidString) {
+export function uuidEncodeBase62(uuidString: string): string {
   var hexString = uuidString.replace(/-/g, '')
   var baseString = convertBase(hexString, 16, 62)
   baseString = baseString.padStart(22, '0') // ensure string is length 22 if uuid has leading 0s
@@ -110,7 +100,7 @@ export function uuidEncodeBase62(uuidString) {
  * @param {string} base62 encoded string
  * @return {string} uuid
  */
-export function uuidDecodeBase62(baseString) {
+export function uuidDecodeBase62(baseString: string): string {
   var hexString = convertBase(baseString, 62, 16)
   hexString = hexString.padStart(32, '0') // ensure string is length 32 if baseString has leading 0s
   var uuidString = [hexString.slice(0, 8), hexString.slice(8, 12), hexString.slice(12, 16), hexString.slice(16, 20), hexString.slice(20)]
